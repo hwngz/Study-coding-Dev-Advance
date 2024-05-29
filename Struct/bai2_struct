@@ -1,0 +1,182 @@
+#include<bits/stdc++.h>
+using namespace std;
+struct DT {
+    double heso;
+    int sm;
+};
+
+// Hàm nhập đơn thức
+DT nhapDT() {
+    DT dt;
+    cout << "Nhap he so cua don thuc: ";
+    cin >> dt.heso;
+    cout << "Nhap so mu cua don thuc: ";
+    cin >> dt.sm;
+    return dt;
+}
+
+// Hàm xuất đơn thức
+void xuatDT(const DT& dt) {
+    cout << dt.heso << "x^" << dt.sm;
+}
+
+// // Hàm tính tổng của hai đơn thức
+// DT Sum(const DT& dt1, const DT& dt2) {
+//     DT sum;
+//     if (dt1.sm == dt2.sm) {
+//         sum.heso = dt1.heso + dt2.heso;
+//         sum.sm = dt.sm;
+//     }
+//     else {
+//         cout << "Hai don thuc khong co cung so mu. Khong the tinh tong." << endl;
+//         sum.heso = 0;
+//         sum.sm = 0;
+//     }
+//     return sum;
+// }
+
+// // Hàm tính hiệu của hai đơn thức
+// DT calculateDifference(const DT& term1, const DT& term2) {
+//     DT difference;
+//     if (term1.sm == term2.sm) {
+//         difference.heso = term1.heso - term2.heso;
+//         difference.sm = term1.sm;
+//     }
+//     else {
+//         cout << "Hai don thuc khong co cung so mu. Khong the tinh hieu." << endl;
+//         difference.heso = 0;
+//         difference.sm = 0;
+//     }
+//     return difference;
+// }
+
+// Hàm tính tích của hai đơn thức
+DT tich(const DT& dt1, const DT& dt2) {
+    DT kq;
+    kq.heso = dt1.heso * dt2.heso;
+    kq.sm = dt1.sm + dt2.sm;
+    return kq;
+}
+
+// Hàm tính thương của hai đơn thức
+DT thuong(const DT& dt1, const DT& dt2) {
+    DT kq;
+    if (dt2.heso != 0) {
+        kq.heso = dt1.heso / dt2.heso;
+        kq.sm =dt1.sm - dt2.sm;
+    }
+    else {
+        cout << "Khong the chia cho don thuc co he so bang 0." << endl;
+        kq.heso = 0;
+        kq.sm = 0;
+    }
+    return kq;
+}
+
+// Hàm tính đạo hàm cấp 1 của đơn thức
+DT DH1 (const DT& dt) {
+    DT dh;
+    dh.heso = dt.heso * dt.sm;
+    dh.sm = dt.sm - 1;
+    return dh;
+}
+
+// Hàm tính đạo hàm cấp k của đơn thức
+DT DHk(const DT& dt, int k) {
+    DT dhk = dt;
+    for (int i = 0; i < k; i++) {
+        dhk = DH1(dhk);
+    }
+    return dhk;
+}
+
+// Hàm tính giá trị của đơn thức tại x = x0
+double gt(const DT& dt, double x0) {
+    return dt.heso * pow(x0, dt.sm);
+}
+
+int showMenu() {
+    cout << "1. Nhap don thuc" << endl;
+    cout << "2. Xuat don thuc" << endl;
+    cout << "5. Tinh tich hai don thuc" << endl;
+    cout << "6. Tinh thuong hai don thuc" << endl;
+    cout << "7. Tinh dao ham cap 1 cua don thuc" << endl;
+    cout << "8. Tinh dao ham cap k cua don thuc" << endl;
+    cout << "9. Tinh gia tri don thuc tai x = x0" << endl;
+
+    int choice;
+    cin >> choice;
+    return choice;
+}
+
+int main() {
+    DT dt1, dt2;
+    double x0;
+    int k;
+
+    int choice;
+    do {
+        choice = showMenu();
+
+        switch (choice) {
+        case 1:
+            cout << "Nhap don thuc 1:" << endl;
+            dt1 = nhapDT();
+            cout << "Nhap don thuc 2:" << endl;
+            dt2 = nhapDT();
+            break;
+        case 2:
+            cout << "Don thuc 1: ";
+            xuatDT(dt1);
+            cout << endl;
+            cout << "Don thuc 2: ";
+            xuatDT(dt2);
+            cout << endl;
+            break;
+        case 3:
+        {
+            DT kq = tich(dt1, dt2);
+            cout << "Tich cua hai don thuc: ";
+            xuatDT(kq);
+            cout << endl;
+        }
+        break;
+        case 4:
+        {
+            DT kq = thuong(dt1, dt2);
+            cout << "Thuong cua hai don thuc: ";
+            xuatDT(kq);
+            cout << endl;
+        }
+        break;
+        case 5:
+        {
+            DT dh = DH1(dt1);
+            cout << "Dao ham cap 1 cua don thuc 1: ";
+            xuatDT(dh);
+            cout << endl;
+        }
+        break;
+        case 6:
+            cout << "Nhap cap k: ";
+            cin >> k;
+            {
+                DT dhk = DHk(dt1, k);
+                cout << "Dao ham cap " << k << " cua don thuc 1: ";
+                xuatDT(dhk);
+                cout << endl;
+            }
+            break;
+        case 7:
+            cout << "Nhap gia tri x0: ";
+            cin >> x0;
+            cout << "Gia tri don thuc 1 tai x = " << x0 << ": " << gt(dt1, x0) << endl;
+            cout << "Gia tri don thuc 2 tai x = " << x0 << ": " << gt(dt2, x0) << endl;
+            break;
+        }
+
+        cout << endl;
+    } while (choice != 10);
+
+    return 0;
+}

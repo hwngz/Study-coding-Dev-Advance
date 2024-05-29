@@ -1,0 +1,119 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+struct PS{
+    int tu, mau;
+};
+
+void nhap(PS &a){
+    cin >> a.tu >> a.mau;
+}
+
+void xuat(PS a){
+    cout << a.tu << "/" << a.mau << " ";
+}
+
+// int UCLN (int a, int b){
+//   if ( b == 0){
+//       return a;
+//   }
+//   return UCLN(b, a%b);
+// }
+
+PS rutgon (PS p){
+    PS kq;
+    int tmp = __gcd(p.tu, p.mau);
+    kq.tu = p.tu / tmp;
+    kq.mau = p.mau / tmp;
+    return kq;
+}
+
+PS cong (PS p1, PS p2){
+    PS kq;
+    kq.tu = p1.tu*p2.mau+ p1.mau*p2.tu;
+    kq.mau = p1.mau*p2.mau;
+    return rutgon(kq);
+}
+
+PS tru (PS p1, PS p2){
+    PS kq;
+    kq.tu = p2.tu - p1.tu;
+    kq.mau = p1.mau;
+    return rutgon(kq);
+}
+
+PS nhan (PS p1, PS p2){
+    PS kq;
+    kq.tu = p1.tu * p2.tu;
+    kq.mau = p1.mau * p2.mau;
+}
+
+PS chia (PS p1, PS p2){
+    PS kq;
+    kq.tu = p1.tu * p2.mau;
+    kq.mau = p1.mau * p2.tu;
+    return rutgon(kq);
+}
+
+bool KiemTraToiGian(PS p){
+    if( p.tu==0 || p.mau==0 ){
+        return false;
+    }
+    int ucln = __gcd(p.tu, p.mau);
+    if(ucln == 1){
+        return true;
+    }
+    return false;
+}
+
+PS quydong (PS p1, PS p2){
+    PS kq;
+    kq.tu = p1.tu * p2.mau;
+    kq.mau = p1.mau * p2.mau;
+    return rutgon(kq);
+}
+
+PS kiemTraAmDuong(PS p) {
+    if (p.tu == 0) {
+        cout << "Phan so " << p.tu << "/" << p.mau << " bang 0." << endl;
+    } else if ((p.tu < 0 && p.mau > 0) || (p.tu > 0 && p.mau < 0)) {
+        cout << "Phan so " << p.tu << "/" << p.mau << " la phan so am." << endl;
+    } else {
+        cout << "Phan so " << p.tu << "/" << p.mau << " la phan so duong." << endl;
+    }
+}
+
+bool bang (PS p1, PS p2){
+    if ( p1.tu == p2.tu && p1.mau == p2.mau){
+        return true;
+    }
+    else return false;
+}
+bool hon (PS p1,PS p2){
+    if( p1.tu*p2.mau > p1.mau*p2.tu){
+        return true;
+    }
+    else return false;
+}
+int main(){
+    PS a;
+    PS b;
+    nhap(a);
+    nhap(b);
+    cout << "Phân số 1: ";
+    xuat(a);
+    cout << endl << "Phân số 2: ";
+    xuat(b);
+    cout << endl << "Kết quả cộng hai phân số: " ;
+    xuat(cong (a, b));
+    cout << endl << "Kết quả trừ hai phân số: " ;
+    xuat(tru(a, b));
+    cout << endl << "Kết quả nhân hai phân số: " ;
+    xuat(nhan(a, b));
+    cout << endl << "Kết quả chia hai phân số: " ;
+    xuat(chia(a, b));
+    cout << endl << "Kết quả quy đồng hai phân số: " ;
+    xuat(quydong(a, b));
+    cout << endl;
+    kiemTraAmDuong(b);
+}

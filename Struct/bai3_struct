@@ -1,0 +1,57 @@
+#include<iostream>
+using namespace std;
+struct bacNhat{
+    int a , b ;
+};
+
+istream& operator>>(istream& is, bacNhat &c);
+ostream& operator << (ostream& os, bacNhat c);
+int cong (bacNhat x, int n);
+bacNhat operator + (bacNhat x, bacNhat y);
+bool operator == (bacNhat x, bacNhat y);
+
+int main(){
+    bacNhat a ,b;
+    int n[0];
+    int x;
+    cin>>a>>b>>x;
+    cout<<a<<endl<<b<<endl;
+    cout<<a<<"+"<<b<<"="<<a+b<<endl;
+    cout<<cong(a,x)<<endl<<cong(b,x)<<endl;
+    if(a==b){
+        cout<<"TRUE"<<endl;
+    }
+    else{
+    cout<<"FALSE"<<endl;
+    }
+    return 0;
+}
+istream& operator>>(istream& is, bacNhat &c){
+    is>>c.a>>c.b;
+    return is;
+}
+ostream& operator << (ostream& os, bacNhat c){
+    os<<c.a<<"x+"<<c.b;
+    return os;
+}
+int cong (bacNhat x, int n){
+    int kq;
+    kq=x.a*n+x.b;
+    return kq;
+}
+bacNhat operator + (bacNhat x, bacNhat y){
+    bacNhat kq;
+    kq.a=x.a+y.a;
+    kq.b=x.b+y.b;
+    return kq;
+}
+bool operator == (bacNhat x, bacNhat y){
+    if((x.a+x.b)==(y.a+y.b)){
+        return  true;
+    }
+    else {
+        return false;
+    }
+}
+
+
